@@ -32,10 +32,10 @@
    },
    "scripts": {
       "build": "tsc",
-      "dev:server": "ts-node-dev src/main.ts",
+      "dev": "ts-node-dev src/main.ts",
       "typeorm": "ts-node-dev ./node_modules/typeorm/cli.js",
-      "migration:generate": "npm run typeorm migration:generate -- -d src/ormconfig.ts",
-      "migration:revert": "ts-node ./node_modules/typeorm/cli.js migration:revert -d src/ormconfig.ts",
-      "migration:run": "npm run typeorm  -- -d ./src/ormconfig.ts migration:run"
+      "migrations:generate": "npm run typeorm migration:generate -- -d src/ormconfig.ts",
+      "migrations:revert": "ts-node ./node_modules/typeorm/cli.js migration:revert -d src/ormconfig.ts",
+      "migrations:run": "npm run typeorm  -- -d ./src/ormconfig.ts migration:run"
    }
 }
