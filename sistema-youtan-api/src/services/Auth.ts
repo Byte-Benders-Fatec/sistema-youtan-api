@@ -11,7 +11,7 @@ class AuthService implements IAuthService {
   }
 
   generateToken(user: User): string {
-    return jwt.sign({role: user.role}, process.env.SECRET_KEY, { expiresIn: "24h" });
+    return jwt.sign({role: user.role}, process.env.SECRET_KEY, { expiresIn: process.env.COOKIE_EXPIRES_IN });
   }
 
   getUserByLogin(login: User): Promise<User> {
