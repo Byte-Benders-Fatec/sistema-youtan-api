@@ -21,16 +21,16 @@ class UserController implements IUserController {
     async add(req: Request, res: Response, next: NextFunction): Promise<Response> {
         try {
             const user = req.body;
-            if(!user.email || !user.role) {
+            if(!user.email || !user.role || !user.team) {
                 return res.status(HttpStatus.BAD_REQUEST).json({message: "user body missing"});
             };
 
             const userIsCreated = await this.userService.getByEmail(user.email);
             if (userIsCreated) return res.status(HttpStatus.BAD_REQUEST).json({message: "email already in use"}); 
 
-            const userAdd = await this.userService.add(user);
+            await this.userService.add(user);
 
-            return res.status(HttpStatus.OK).json(userAdd);
+            return res.status(HttpStatus.OK).json({message: "user successfully created"});
         } catch (error) {
             next(error);  
         };
@@ -39,6 +39,7 @@ class UserController implements IUserController {
     async getMany(_req: Request, res: Response, next: NextFunction): Promise<Response> {
         try {
             const users = await this.userService.getMany();
+            if (users.length === 0) return res.status(HttpStatus.OK).json({message: "no user was created"});
 
             return res.status(HttpStatus.OK).json(users);
         } catch (error) {
@@ -92,9 +93,9 @@ class UserController implements IUserController {
             const user = await this.userService.getById(id);
             if(!user) return res.status(HttpStatus.NOT_FOUND).json({message: "user not found"});
       
-            const updatedUser = await this.userService.updateById(user, newUserData);
+            await this.userService.updateById(user, newUserData);
       
-            return res.status(HttpStatus.OK).json(updatedUser); 
+            return res.status(HttpStatus.OK).json({message: "user successfully updated"}); 
         } catch (error) {
             next(error);
         };

@@ -37,6 +37,7 @@ class TeamController implements ITeamController {
     async getMany(_req: Request, res: Response, next: NextFunction): Promise<Response> {
         try {
             const teams = await this.teamService.getMany();
+            if (teams.length === 0) return res.status(HttpStatus.OK).json({message: "no team was created"});
 
             return res.status(HttpStatus.OK).json(teams);
         } catch (error) {
