@@ -1,4 +1,5 @@
 import express from "express";
+import cors from "cors";
 import cookieParser from "cookie-parser";
 import ormconfig from "../ormconfig";
 import userRouter from "../configs/routes/User"
@@ -19,6 +20,7 @@ export default (app: express.Express): express.Express => {
     app.use(express.json());
     app.use(express.urlencoded({ extended: false }));
     app.use(cookieParser());
+    app.use(cors({ credentials: true }));
 
     // public routes
     app.use(PUBLIC, authRouter)
