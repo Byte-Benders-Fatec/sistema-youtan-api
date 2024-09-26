@@ -1,3 +1,4 @@
+import roles from "../domain/User";
 import { IUserRepository } from "../interfaces/User";
 import User from "../models/User";
 import { DeleteResult, Repository } from "typeorm";
@@ -17,6 +18,11 @@ class UserRepository implements IUserRepository {
     
     async getMany(): Promise<User[]> {
         const users = await this.userRepository.find({
+            select: {
+                id: true,
+                email: true,
+                role: true,
+            },
             relations: {
                 team: true
             },
@@ -46,6 +52,10 @@ class UserRepository implements IUserRepository {
         });
     
         return user;
+    };
+
+    async getRoles(): Promise<string[]> {
+        return roles;
     };
 
     async updateById(newUserData: User): Promise<User> {

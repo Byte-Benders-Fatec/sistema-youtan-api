@@ -16,6 +16,10 @@ class UserRouter {
       .route(`${this.path}`)
       .post(this.userController.add)
       .get(this.userController.getMany);
+    
+    router
+      .route(`${this.path}/roles`)
+      .get(this.userController.getRoles);
 
     router
       .route(`${this.path}/:id`)

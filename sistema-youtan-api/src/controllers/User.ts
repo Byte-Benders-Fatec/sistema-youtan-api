@@ -14,6 +14,7 @@ class UserController implements IUserController {
         this.getByEmail = this.getByEmail.bind(this);
         this.getByLogin = this.getByLogin.bind(this);
         this.getById = this.getById.bind(this);
+        this.getRoles = this.getRoles.bind(this);
         this.updateById = this.updateById.bind(this);
         this.deleteById = this.deleteById.bind(this);
     };
@@ -76,6 +77,18 @@ class UserController implements IUserController {
             if(!user) return res.status(HttpStatus.NOT_FOUND).json({message: "user not found"});
     
             return res.status(HttpStatus.OK).json(user);
+        } catch (error) {
+            next(error);
+        };
+        
+    };
+
+    async getRoles(_req: Request, res: Response, next: NextFunction): Promise<Response> {
+        try {
+            const roles = await this.userService.getRoles();
+            if(!roles) return res.status(HttpStatus.NOT_FOUND).json({message: "roles not found"});
+    
+            return res.status(HttpStatus.OK).json(roles);
         } catch (error) {
             next(error);
         };

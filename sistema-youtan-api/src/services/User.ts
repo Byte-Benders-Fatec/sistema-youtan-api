@@ -12,7 +12,7 @@ class UserService implements IUserService{
     };
 
     async add(user: User): Promise<User> {
-        user.password = passwordUtils.generatePass();
+        // user.password = passwordUtils.generatePass();
         await validationsUtils.validateObject(User, user);
         user = await this.userRepository.add(user);
 
@@ -43,6 +43,12 @@ class UserService implements IUserService{
         const user = await this.userRepository.getById(id);
 
         return user;
+    };
+
+    async getRoles(): Promise<string[]> {
+        const roles = await this.userRepository.getRoles();
+
+        return roles;
     };
 
     async updateById(user: User, newUserData: User): Promise<User> {
