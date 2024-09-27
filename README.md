@@ -1,13 +1,63 @@
-# api-2sem-2024
-Repositório destinado ao grupo Byte Benders para desenvolvimento da API do terceiro semestre de ADS.
+# sistema-youtan-api
 
-# Sobre o Projeto 🧩
-Apresentado o desafio pela empresa parceira, foi iniciado o desenvolvimento de uma plataforma/dashboard para "feedback e pesquisa de clima e cultura com a equipe". Consiste em um processo de pesquisa estruturada e transparente, para garantir o bem estar de toda a equipe, promovendo desenvolvimento, motivação e diminuição de indices de TurnOver em uma empresa.
+## Dependências
+### Obrigatórias
+- [Node](https://nodejs.org/en/download)
 
-### Entrega de Sprints 🎯
-| Sprint | Data | Status | Relátorios |
-|--------|------|--------|------------|
-| 01 | 29/09/2024 | Concluído |<a colar link aqui> Sprint 01 </a>|
-| 02 | 20/10/2024 | A concluir |<a Sprint 02 </a> |
-| 03 | 10/11/2024 | A concluir |<a Sprint 03 </a> |
-| 04 | 01/12/2024 | A concluir |<a Sprint 04 </a> |
+### Opcionais
+- [Postman](https://www.postman.com/downloads/)
+
+
+## Instalação
+### 1. Acessando o Projeto: 
+Clonar o projeto _**sistema-youtan-api**_ pelo terminal digitando:
+```bash
+git clone https://github.com/Byte-Benders-Fatec/api-2sem-2024.git
+```
+
+### 2. Instalação das dependências:
+Após clonar o projeto, efetue a instalação das dependências digitando no terminal:
+```bash
+npm install
+```
+
+### 3. Configurar variáveis de ambiente:
+Para configurar as variáveis de ambiente, crie um arquivo com o nome `.env` e copie o conteúdo do arquivo `.env.example` e cole dentro dele, ou peça para alguém do time enviar o arquivo `.env`.
+
+### 4. Configurar o banco de dados:
+Inicie e configure o banco de dados localmente.
+
+### 5. Rodar as migrations:
+Para rodar as migrations do projeto, execute no terminal:
+```bash
+npm run migrations:run
+```
+
+### 6. Rodar o projeto:
+Para rodar o projeto, no terminal:
+```bash
+npm run dev
+```
+
+## Migrations
+Como rodar as migrations:
+```bash
+npm run migrations:run
+```
+
+Como gerar as migrations automaticamente:
+```bash
+npm run migrations:generate "nome_da_migration"
+```
+
+Como reverter a última migration executada:
+```bash
+npm run migrations:revert
+```
+
+## Documentação
+Para acessar a documentação da API utilize o Postman e importe todos os arquivos dentro de `docs/postman`.
+
+
+## Dicas
+- Para pular a autenticação, vá ao arquivo `.env` e altere a variável `SKIP_AUTH` para `true`.
