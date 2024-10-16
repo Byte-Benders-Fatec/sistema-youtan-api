@@ -14,9 +14,9 @@ class Question {
 
     @Column('varchar',{
         length: 100,
-        nullable: false
+        nullable: true
     })
-    answer_Options: string;
+    alternatives: string;
     
     @Column('varchar',{
         length: 20,
