@@ -1,4 +1,5 @@
-import { Column, Entity, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import Form from "./Form";
 
 @Entity('questions')
 
@@ -24,6 +25,8 @@ class Question {
     })
     type: string;
 
+    @ManyToOne(() => Form, (form) => form.questions)
+    form: Form;
 }
 
 export default Question;
