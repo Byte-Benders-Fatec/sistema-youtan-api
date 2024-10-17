@@ -17,12 +17,7 @@ class questionRepository implements IQuestionRepository {
     
     async getMany(): Promise<Question[]> {
         const question = await this.questionRepository.find({
-            select: {
-                id: true,
-                title: true,
-                type: true,
-            },
-            relations: ['questions'],
+            relations: ['form'],
         });
         
         return question;
@@ -38,7 +33,7 @@ class questionRepository implements IQuestionRepository {
     async getById(id: number): Promise<Question> {
         const question = await this.questionRepository.findOne({
             where: { id },
-            relations: ['questions'],
+            relations: ['form'],
         });
     
         return question;
