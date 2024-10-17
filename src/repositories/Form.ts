@@ -10,37 +10,38 @@ class formRepository implements IFormRepository {
         this.formRepository = formRepository;
     };
 
-    async add(Form: Form): Promise<Form> {
-        Form = await this.formRepository.save(Form);
+    async add(form: Form): Promise<Form> {
+        form = await this.formRepository.save(form);
     
-        return Form;
+        return form;
     };
     
     async getMany(): Promise<Form[]> {
-        const Form = await this.formRepository.find({
+        const form = await this.formRepository.find({
             select: {
                 id: true,
                 category: true,
-
             },
+            relations: ['questions'],
         });
         
-        return Form;
+        return form;
     };
 
     async getByCategory(category: string): Promise<Form[]> {
-        const Form = await this.formRepository.findBy({category});
+        const form = await this.formRepository.findBy({category});
     
-        return Form;
+        return form;
     };
     
 
     async getById(id: number): Promise<Form> {
-        const Form = await this.formRepository.findOneBy({
-            id
+        const form = await this.formRepository.findOne({
+            where: { id },
+            relations: ['questions'],
         });
     
-        return Form;
+        return form;
     };
 
     async getCategories(): Promise<string[]> {

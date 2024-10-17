@@ -16,12 +16,12 @@ interface IFormRepository {
 interface IFormService {
   formRepository: IFormRepository;
 
-  add(Form: Form): Promise<Form>;
+  add(form: Form): Promise<Form>;
   getMany(): Promise<Form[]>;
   getByCategory(category:string) : Promise<Form[]>  
   getById(id: number): Promise<Form>;
   getCategories() : Promise<string[]>
-  updateById(Form: Form, newFormData: Form): Promise<Form>;
+  updateById(form: Form, newFormData: Form): Promise<Form>;
   deleteById(id: number): Promise<DeleteResult>;
 };
 

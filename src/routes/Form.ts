@@ -3,10 +3,10 @@ import { IFormController } from "../interfaces/Form";
 
 class FormRouter {
   path: string = "/forms";
-  FormController: IFormController;
+  formController: IFormController;
 
-  constructor(FormController: IFormController) {
-    this.FormController = FormController;
+  constructor(formController: IFormController) {
+    this.formController = formController;
   }
 
   getRouter(): Router {
@@ -14,18 +14,18 @@ class FormRouter {
 
     router
       .route(`${this.path}`)
-      .post(this.FormController.add)
-      .get(this.FormController.getMany);
+      .post(this.formController.add)
+      .get(this.formController.getMany);
     
     router
       .route(`${this.path}/categories`)
-      .get(this.FormController.getCategories);
+      .get(this.formController.getCategories);
 
     router
       .route(`${this.path}/:id`)
-      .get(this.FormController.getById)
-      .put(this.FormController.updateById)
-      .delete(this.FormController.deleteById)
+      .get(this.formController.getById)
+      .put(this.formController.updateById)
+      .delete(this.formController.deleteById)
 
     return router;
     
