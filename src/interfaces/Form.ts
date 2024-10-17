@@ -8,34 +8,37 @@ interface IFormRepository {
   getMany(): Promise<Form[]>;
   getByCategory(category:string) : Promise<Form[]>  
   getById(id: number): Promise<Form>;
+  getCategories() : Promise<string[]>
   updateById(newFormData: Form): Promise<Form>;
   deleteById(id: number): Promise<DeleteResult>;
 };
 
 interface IFormService {
-  FormRepository: IFormRepository;
+  formRepository: IFormRepository;
 
   add(Form: Form): Promise<Form>;
   getMany(): Promise<Form[]>;
   getByCategory(category:string) : Promise<Form[]>  
   getById(id: number): Promise<Form>;
+  getCategories() : Promise<string[]>
   updateById(Form: Form, newFormData: Form): Promise<Form>;
   deleteById(id: number): Promise<DeleteResult>;
 };
 
 interface IFormController {
-  FormService: IFormService;
+  formService: IFormService;
 
   add(req: Request, res: Response, next: NextFunction): Promise<void | Response>;
   getMany(req: Request, res: Response, next: NextFunction): Promise<void | Response>;
   getByCategory(req: Request, res: Response, next: NextFunction): Promise<void | Response>;
   getById(req: Request, res: Response, next: NextFunction): Promise<void | Response>;
+  getCategories(req: Request, res: Response, next: NextFunction): Promise<void | Response>;
   updateById(req: Request, res: Response, next: NextFunction): Promise<void | Response>;
   deleteById(req: Request, res: Response, next: NextFunction): Promise<void | Response>;
 };
 
 interface IFormRouter extends IRouter {
-  FormController: IFormController;
+  formController: IFormController;
 }
 
 export {

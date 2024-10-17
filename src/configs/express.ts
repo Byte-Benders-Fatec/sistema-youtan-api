@@ -9,6 +9,7 @@ import middlewareAdmin from "../middlewares/isAdmin";
 import authRouter from './routes/Auth';
 import middlewareNotFound from "../middlewares/NotFound";
 import teamRouter from './routes/Team';
+import formRouter from './routes/Form';
 
 const API = "/api/v1";
 const PUBLIC = `${API}/public`;
@@ -34,7 +35,8 @@ export default (app: express.Express): express.Express => {
     // admin routes
     app.use(PRIVATE, userRouter);
     app.use(PRIVATE, teamRouter);
-
+    app.use(PRIVATE, formRouter);
+    
     // enable error handler middleware for all routes
     app.use(middlewareError);
 

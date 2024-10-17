@@ -2,7 +2,7 @@ import { Router } from "express";
 import { IFormController } from "../interfaces/Form";
 
 class FormRouter {
-  path: string = "/Forms";
+  path: string = "/forms";
   FormController: IFormController;
 
   constructor(FormController: IFormController) {
@@ -18,7 +18,8 @@ class FormRouter {
       .get(this.FormController.getMany);
     
     router
-      .route(`${this.path}/category`)
+      .route(`${this.path}/categories`)
+      .get(this.FormController.getCategories);
 
     router
       .route(`${this.path}/:id`)

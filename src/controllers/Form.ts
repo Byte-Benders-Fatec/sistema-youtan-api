@@ -1,32 +1,33 @@
-import Form from "../models/Form";
 import { NextFunction, Request, Response } from "express";
 import { IFormController, IFormService } from "../interfaces/Form";
 import HttpStatus from 'http-status-codes';
 
 class FormController implements IFormController {
-    FormService: IFormService;
+    formService: IFormService;
 
-    constructor(FormService: IFormService) {
-        this.FormService = FormService;
+    constructor(formService: IFormService) {
+        this.formService = formService;
+        
         this.add = this.add.bind(this);
         this.getMany = this.getMany.bind(this);
         this.getByCategory = this.getByCategory.bind(this);
         this.getById = this.getById.bind(this);
+        this.getCategories = this.getCategories.bind(this);
         this.updateById = this.updateById.bind(this);
         this.deleteById = this.deleteById.bind(this);
     };
 
     async add(req: Request, res: Response, next: NextFunction): Promise<Response> {
         try {
-            const Form = req.body;
-            if(!Form.category) {
-                return res.status(HttpStatus.BAD_REQUEST).json({message: "Form category missing"});
+            const form = req.body;
+            if(!form.category) {
+                return res.status(HttpStatus.BAD_REQUEST).json({message: "form category missing"});
             };
 
 
-            await this.FormService.add(Form);
+            await this.formService.add(form);
 
-            return res.status(HttpStatus.OK).json({message: "Form successfully created"});
+            return res.status(HttpStatus.OK).json({message: "form successfully created"});
         } catch (error) {
             next(error);  
         };
@@ -34,10 +35,10 @@ class FormController implements IFormController {
 
     async getMany(_req: Request, res: Response, next: NextFunction): Promise<Response> {
         try {
-            const Forms = await this.FormService.getMany();
-            if (Forms.length === 0) return res.status(HttpStatus.OK).json({message: "no Form was created"});
+            const form = await this.formService.getMany();
+            if (form.length === 0) return res.status(HttpStatus.OK).json({message: "no form was created"});
 
-            return res.status(HttpStatus.OK).json(Forms);
+            return res.status(HttpStatus.OK).json(form);
         } catch (error) {
             next(error);
         };
@@ -48,10 +49,10 @@ class FormController implements IFormController {
             const category = req.body.category;
             if (!category) return res.status(HttpStatus.BAD_REQUEST).json({message: "category missing"});
 
-            const Form = await this.FormService.getByCategory(category);
-            if(!Form) return res.status(HttpStatus.NOT_FOUND).json({message: "category not found"});
+            const form = await this.formService.getByCategory(category);
+            if(!form) return res.status(HttpStatus.NOT_FOUND).json({message: "category not found"});
 
-            return res.status(HttpStatus.OK).json(Form);
+            return res.status(HttpStatus.OK).json(form);
         } catch (error) {
             next(error);
         }
@@ -61,12 +62,24 @@ class FormController implements IFormController {
     async getById(req: Request, res: Response, next: NextFunction): Promise<Response> {
         try {
             const id = parseInt(req.params.id);
-            if(!id) return res.status(HttpStatus.BAD_REQUEST).json({message: "Form id missing"});
+            if(!id) return res.status(HttpStatus.BAD_REQUEST).json({message: "form id missing"});
     
-            const Form = await this.FormService.getById(id);
-            if(!Form) return res.status(HttpStatus.NOT_FOUND).json({message: "Form not found"});
+            const form = await this.formService.getById(id);
+            if(!form) return res.status(HttpStatus.NOT_FOUND).json({message: "form not found"});
     
-            return res.status(HttpStatus.OK).json(Form);
+            return res.status(HttpStatus.OK).json(form);
+        } catch (error) {
+            next(error);
+        };
+        
+    };
+
+    async getCategories(_req: Request, res: Response, next: NextFunction): Promise<Response> {
+        try {
+            const categories = await this.formService.getCategories();
+            if(!categories) return res.status(HttpStatus.NOT_FOUND).json({message: "categories not found"});
+    
+            return res.status(HttpStatus.OK).json(categories);
         } catch (error) {
             next(error);
         };
@@ -77,17 +90,17 @@ class FormController implements IFormController {
     async updateById(req: Request, res: Response, next: NextFunction): Promise<void | Response> {
         try {
             const id = parseInt(req.params.id);
-            if(!id) return res.status(HttpStatus.BAD_REQUEST).json({message: "Form id missing"});
+            if(!id) return res.status(HttpStatus.BAD_REQUEST).json({message: "form id missing"});
       
             const newFormData = req.body;
-            if(!newFormData) return res.status(HttpStatus.BAD_REQUEST).json({message: "new Form body missing"});
+            if(!newFormData) return res.status(HttpStatus.BAD_REQUEST).json({message: "new form body missing"});
       
-            const Form = await this.FormService.getById(id);
-            if(!Form) return res.status(HttpStatus.NOT_FOUND).json({message: "Form not found"});
+            const form = await this.formService.getById(id);
+            if(!form) return res.status(HttpStatus.NOT_FOUND).json({message: "form not found"});
       
-            await this.FormService.updateById(Form, newFormData);
+            await this.formService.updateById(form, newFormData);
       
-            return res.status(HttpStatus.OK).json({message: "Form successfully updated"}); 
+            return res.status(HttpStatus.OK).json({message: "form successfully updated"}); 
         } catch (error) {
             next(error);
         };
@@ -96,12 +109,12 @@ class FormController implements IFormController {
     async deleteById(req: Request, res: Response, next: NextFunction): Promise<void | Response> {
         try {
             const id = parseInt(req.params.id);
-            if(!id) return res.status(HttpStatus.BAD_REQUEST).json({message: "Form id missing"});
+            if(!id) return res.status(HttpStatus.BAD_REQUEST).json({message: "form id missing"});
     
-            const deletedRow = await this.FormService.deleteById(id);
-            if(!deletedRow.affected) return res.status(HttpStatus.BAD_REQUEST).json({message: "Form not found"});
+            const deletedRow = await this.formService.deleteById(id);
+            if(!deletedRow.affected) return res.status(HttpStatus.BAD_REQUEST).json({message: "form not found"});
     
-            return res.status(HttpStatus.OK).json({message: `Form id ${id} deleted`});
+            return res.status(HttpStatus.OK).json({message: `form id ${id} deleted`});
         } catch (error) {
             next(error);
         };
