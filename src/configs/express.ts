@@ -10,6 +10,7 @@ import authRouter from './routes/Auth';
 import middlewareNotFound from "../middlewares/NotFound";
 import teamRouter from './routes/Team';
 import formRouter from './routes/Form';
+import questionRouter from './routes/Question'
 
 const API = "/api/v1";
 const PUBLIC = `${API}/public`;
@@ -36,6 +37,7 @@ export default (app: express.Express): express.Express => {
     app.use(PRIVATE, userRouter);
     app.use(PRIVATE, teamRouter);
     app.use(PRIVATE, formRouter);
+    app.use(PRIVATE, questionRouter)
     
     // enable error handler middleware for all routes
     app.use(middlewareError);
