@@ -1,5 +1,5 @@
 import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
-import Form from "./Forms";
+import Form from "./Form";
 
 @Entity('questions')
 
