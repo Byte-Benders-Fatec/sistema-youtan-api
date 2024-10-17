@@ -20,8 +20,8 @@ class QuestionController implements IQuestionController {
     async add(req: Request, res: Response, next: NextFunction): Promise<Response> {
         try {
             const question = req.body;
-            if(!question.category) {
-                return res.status(HttpStatus.BAD_REQUEST).json({message: "question type missing"});
+            if(!question.title || !question.alternatives || !question.type || !question.formId) {
+                return res.status(HttpStatus.BAD_REQUEST).json({message: "question body missing"});
             };
 
 
