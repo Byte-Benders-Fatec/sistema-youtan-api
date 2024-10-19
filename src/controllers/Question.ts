@@ -13,6 +13,7 @@ class QuestionController implements IQuestionController {
         this.getById = this.getById.bind(this);
         this.getByType = this.getByType.bind(this);
         this.getByTitle = this.getByTitle.bind(this);
+        this.getTypes = this.getTypes.bind(this);
         this.updateById = this.updateById.bind(this);
         this.deleteById = this.deleteById.bind(this);
     };
@@ -25,9 +26,9 @@ class QuestionController implements IQuestionController {
             };
 
 
-            await this.questionService.add(question);
+            const newQuestion = await this.questionService.add(question);
 
-            return res.status(HttpStatus.OK).json({message: "question successfully created"});
+            return res.status(HttpStatus.OK).json(newQuestion);
         } catch (error) {
             next(error);  
         };
@@ -88,6 +89,18 @@ class QuestionController implements IQuestionController {
         }
     };
 
+    async getTypes(_req: Request, res: Response, next: NextFunction): Promise<Response> {
+        try {
+            const types = await this.questionService.getTypes();
+            if(!types) return res.status(HttpStatus.NOT_FOUND).json({message: "types not found"});
+    
+            return res.status(HttpStatus.OK).json(types);
+        } catch (error) {
+            next(error);
+        };
+        
+    };
+
 
     async updateById(req: Request, res: Response, next: NextFunction): Promise<void | Response> {
         try {
@@ -100,9 +113,9 @@ class QuestionController implements IQuestionController {
             const question = await this.questionService.getById(id);
             if(!question) return res.status(HttpStatus.NOT_FOUND).json({message: "question not found"});
       
-            await this.questionService.updateById(question, newQuestionData);
+            const updatedQuestion = await this.questionService.updateById(question, newQuestionData);
       
-            return res.status(HttpStatus.OK).json({message: "question successfully updated"}); 
+            return res.status(HttpStatus.OK).json(updatedQuestion); 
         } catch (error) {
             next(error);
         };

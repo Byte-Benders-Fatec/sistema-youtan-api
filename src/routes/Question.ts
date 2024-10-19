@@ -17,6 +17,9 @@ class QuestionRouter {
       .post(this.questionController.add)
       .get(this.questionController.getMany);
     
+    router
+      .route(`${this.path}/types`)
+      .get(this.questionController.getTypes);
 
     router
       .route(`${this.path}/:id`)
