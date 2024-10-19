@@ -29,9 +29,9 @@ class UserController implements IUserController {
             const userIsCreated = await this.userService.getByEmail(user.email);
             if (userIsCreated) return res.status(HttpStatus.BAD_REQUEST).json({message: "email already in use"}); 
 
-            await this.userService.add(user);
+            const newUser = await this.userService.add(user);
 
-            return res.status(HttpStatus.OK).json({message: "user successfully created"});
+            return res.status(HttpStatus.OK).json(newUser);
         } catch (error) {
             next(error);  
         };
@@ -106,9 +106,9 @@ class UserController implements IUserController {
             const user = await this.userService.getById(id);
             if(!user) return res.status(HttpStatus.NOT_FOUND).json({message: "user not found"});
       
-            await this.userService.updateById(user, newUserData);
+            const updatedUser = await this.userService.updateById(user, newUserData);
       
-            return res.status(HttpStatus.OK).json({message: "user successfully updated"}); 
+            return res.status(HttpStatus.OK).json(updatedUser); 
         } catch (error) {
             next(error);
         };

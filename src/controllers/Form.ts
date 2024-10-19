@@ -25,9 +25,9 @@ class FormController implements IFormController {
             };
 
 
-            await this.formService.add(form);
+            const newForm = await this.formService.add(form);
 
-            return res.status(HttpStatus.OK).json({message: "form successfully created"});
+            return res.status(HttpStatus.OK).json(newForm);
         } catch (error) {
             next(error);  
         };
@@ -98,9 +98,9 @@ class FormController implements IFormController {
             const form = await this.formService.getById(id);
             if(!form) return res.status(HttpStatus.NOT_FOUND).json({message: "form not found"});
       
-            await this.formService.updateById(form, newFormData);
+            const updatedForm = await this.formService.updateById(form, newFormData);
       
-            return res.status(HttpStatus.OK).json({message: "form successfully updated"}); 
+            return res.status(HttpStatus.OK).json(updatedForm); 
         } catch (error) {
             next(error);
         };
