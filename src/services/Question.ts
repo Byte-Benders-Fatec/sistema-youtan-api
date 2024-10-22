@@ -51,7 +51,7 @@ class QuestionService implements IQuestionService{
     async updateById(question: Question, newQuestionData: Question): Promise<Question> {
         question.title = newQuestionData.title ? newQuestionData.title : question.title;
         question.type = newQuestionData.type ? newQuestionData.type : question.type;
-        question.alternatives = newQuestionData.alternatives ? newQuestionData.alternatives : question.alternatives;
+        question.alternatives = newQuestionData.alternatives ? newQuestionData.alternatives : "";
         question.form = newQuestionData.form ? newQuestionData.form : question.form;
 
 
