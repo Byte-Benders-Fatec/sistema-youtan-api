@@ -25,7 +25,7 @@ class Question {
     })
     type: string;
 
-    @ManyToOne(() => Form, (form) => form.questions)
+    @ManyToOne(() => Form, (form) => form.questions, { onDelete: "CASCADE" })
     form: Form;
 }
 
