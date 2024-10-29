@@ -21,10 +21,10 @@ class UserService implements IUserService{
         return user;
     };
 
-    async getMany(): Promise<User[]> {
-        const users = await this.userRepository.getMany();
+    async getMany(skip: number=0, take: number=10, page: number=1): Promise<[User[], Number]> {
+        const [users, total] = await this.userRepository.getMany(skip, take, page);
 
-        return users;
+        return [users, total];
     };
 
     async getByEmail(email: string): Promise<User> {

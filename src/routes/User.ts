@@ -15,7 +15,6 @@ class UserRouter {
     router
       .route(`${this.path}`)
       .post(this.userController.add)
-      .get(this.userController.getMany);
     
     router
       .route(`${this.path}/roles`)
@@ -26,6 +25,10 @@ class UserRouter {
       .get(this.userController.getById)
       .put(this.userController.updateById)
       .delete(this.userController.deleteById)
+    
+    router
+      .route(`${this.path}/:take?/:page?`)
+      .get(this.userController.getMany);
 
     return router;
     

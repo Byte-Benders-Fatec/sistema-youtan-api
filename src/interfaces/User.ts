@@ -6,7 +6,7 @@ import { DeleteResult } from "typeorm";
 
 interface IUserRepository {
   add(user: User): Promise<User>;
-  getMany(): Promise<User[]>;
+  getMany(skip: number, take: number, page: number): Promise<[User[], Number]>;
   getByEmail(email: string): Promise<User>;
   getByLogin(login: User): Promise<User>;
   getById(id: number): Promise<User>;
@@ -19,7 +19,7 @@ interface IUserService {
   userRepository: IUserRepository;
 
   add(user: User): Promise<User>;
-  getMany(): Promise<User[]>;
+  getMany(skip?: number, take?: number, page?: number): Promise<[User[], Number]>;
   getByEmail(email: string): Promise<User>;
   getByLogin(login: User): Promise<User>;
   getById(id: number): Promise<User>;

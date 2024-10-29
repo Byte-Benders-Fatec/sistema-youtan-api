@@ -16,8 +16,8 @@ class UserRepository implements IUserRepository {
         return user;
     };
     
-    async getMany(): Promise<User[]> {
-        const users = await this.userRepository.find({
+    async getMany(skip: number, take: number, _page: number): Promise<[User[], number]> {
+        const [users, total] = await this.userRepository.findAndCount({
             select: {
                 id: true,
                 name: true,
@@ -27,9 +27,11 @@ class UserRepository implements IUserRepository {
             relations: {
                 team: true
             },
+            skip,
+            take
         });
         
-        return users;
+        return [users, total];
     };
 
     async getByEmail(email: string): Promise<User> {
