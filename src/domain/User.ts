@@ -1,7 +1,8 @@
 const UserRoles = [
     "Admin",
     "Lider",
-    "Liderado"
+    "Liderado",
+    "Líder e Liderado"
 ];
 
 export default UserRoles;
