@@ -28,7 +28,7 @@ class AuthController implements IAuthController {
 
         cookieUtils.setCookie(res, process.env.COOKIE_NAME, token);
 
-        return res.status(HttpStatus.OK).json({ message: "login successful" });
+        return res.status(HttpStatus.OK).json({role: user.role});
       } catch (error) {
         return next(error);
       }
