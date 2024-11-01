@@ -22,7 +22,7 @@ export default (app: express.Express): express.Express => {
     app.use(express.json());
     app.use(express.urlencoded({ extended: false }));
     app.use(cookieParser());
-    app.use(cors({ credentials: true }));
+    app.use(cors({ credentials: true, origin: true }));
 
     // public routes
     app.use(PUBLIC, authRouter)
