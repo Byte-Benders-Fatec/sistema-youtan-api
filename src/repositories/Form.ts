@@ -16,16 +16,13 @@ class formRepository implements IFormRepository {
         return form;
     };
     
-    async getMany(): Promise<Form[]> {
-        const form = await this.formRepository.find({
-            select: {
-                id: true,
-                category: true,
-            },
-            relations: ['questions'],
+    async getMany(skip: number, take: number, _page: number): Promise<[Form[], number]> {
+        const [forms, total] = await this.formRepository.findAndCount({
+            skip,
+            take
         });
         
-        return form;
+        return [forms, total];
     };
 
     async getByCategory(category: string): Promise<Form[]> {

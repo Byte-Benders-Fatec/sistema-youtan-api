@@ -16,12 +16,16 @@ class questionRepository implements IQuestionRepository {
         return question;
     };
     
-    async getMany(): Promise<Question[]> {
-        const question = await this.questionRepository.find({
-            relations: ['form'],
+    async getMany(skip: number, take: number, _page: number): Promise<[Question[], number]> {
+        const [question, total] = await this.questionRepository.findAndCount({
+            relations: {
+                form: true
+            },
+            skip,
+            take
         });
         
-        return question;
+        return [question, total];
     };
 
     async getByTitle(title: string): Promise<Question[]> {

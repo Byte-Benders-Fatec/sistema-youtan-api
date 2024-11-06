@@ -18,10 +18,10 @@ class QuestionService implements IQuestionService{
         return question;
     };
 
-    async getMany(): Promise<Question[]> {
-        const question = await this.questionRepository.getMany();
+    async getMany(skip: number=0, take: number=10, page: number=1): Promise<[Question[], Number]> {
+        const [questions, total] = await this.questionRepository.getMany(skip, take, page);
 
-        return question;
+        return [questions, total];
     };
 
     async getByTitle(title: string): Promise<Question[]> {

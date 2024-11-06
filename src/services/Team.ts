@@ -15,10 +15,10 @@ class TeamService implements ITeamService{
         return team;
     };
 
-    async getMany(): Promise<Team[]> {
-        const teams = await this.teamRepository.getMany();
+    async getMany(skip: number=0, take: number=10, page: number=1): Promise<[Team[], Number]> {
+        const [teams, total] = await this.teamRepository.getMany(skip, take, page);
 
-        return teams;
+        return [teams, total];
     };
 
     async getById(id: number): Promise<Team> {

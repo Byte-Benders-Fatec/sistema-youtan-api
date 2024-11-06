@@ -34,12 +34,16 @@ class QuestionController implements IQuestionController {
         };
     };
 
-    async getMany(_req: Request, res: Response, next: NextFunction): Promise<Response> {
+    async getMany(req: Request, res: Response, next: NextFunction): Promise<Response> {
         try {
-            const question = await this.questionService.getMany();
-            if (question.length === 0) return res.status(HttpStatus.OK).json({message: "no question was created"});
+            const take = Number(req.query.take) || 10;
+            const page = Number(req.query.page) || 1;
+            const skip = (page-1) * take;
 
-            return res.status(HttpStatus.OK).json(question);
+            const [teams, total] = await this.questionService.getMany(skip, take, page);
+            if (teams.length === 0) return res.status(HttpStatus.OK).json({message: "no question was created"});
+
+            return res.status(HttpStatus.OK).json({teams, total});
         } catch (error) {
             next(error);
         };

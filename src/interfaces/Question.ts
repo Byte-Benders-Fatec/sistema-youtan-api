@@ -5,7 +5,7 @@ import { DeleteResult } from "typeorm";
 
 interface IQuestionRepository {
   add(question: Question): Promise<Question>;
-  getMany(): Promise<Question[]>;
+  getMany(skip: number, take: number, page: number): Promise<[Question[], Number]>;
   getByTitle(title:string): Promise<Question[]>
   getByType(type:string): Promise<Question[]>
   getById(id: number): Promise<Question>;
@@ -18,7 +18,7 @@ interface IQuestionService {
   questionRepository: IQuestionRepository;
 
   add(question: Question): Promise<Question>;
-  getMany(): Promise<Question[]>;
+  getMany(skip: number, take: number, page: number): Promise<[Question[], Number]>;
   getById(id: number): Promise<Question>;
   getByTitle(title:string): Promise<Question[]>
   getByType(type:string): Promise<Question[]>

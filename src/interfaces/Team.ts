@@ -7,7 +7,7 @@ import { DeleteResult } from "typeorm";
 
 interface ITeamRepository {
   add(team: Team): Promise<Team>;
-  getMany(): Promise<Team[]>;
+  getMany(skip: number, take: number, page: number): Promise<[Team[], Number]>;
   getById(id: number): Promise<Team>;
   getByName(name: string): Promise<Team>;
   updateById(newTeamData: Team): Promise<Team>;
@@ -18,7 +18,7 @@ interface ITeamService {
   teamRepository: ITeamRepository;
 
   add(team: Team): Promise<Team>;
-  getMany(): Promise<Team[]>;
+  getMany(skip?: number, take?: number, page?: number): Promise<[Team[], Number]>;
   getById(id: number): Promise<Team>;
   getByName(name: string): Promise<Team>;
   updateById(team: Team, newTeamData: Team): Promise<Team>;

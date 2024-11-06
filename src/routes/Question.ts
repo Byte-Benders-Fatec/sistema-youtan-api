@@ -26,8 +26,14 @@ class QuestionRouter {
       .get(this.questionController.getById)
       .put(this.questionController.updateById)
       .delete(this.questionController.deleteById)
-
-    return router;
+    
+      
+    router
+      .route(`${this.path}/:take?/:page?`)
+      .get(this.questionController.getMany);
+    
+    
+      return router;
     
   }
 }

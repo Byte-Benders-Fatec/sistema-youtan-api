@@ -27,6 +27,11 @@ class FormRouter {
       .put(this.formController.updateById)
       .delete(this.formController.deleteById)
 
+
+    router
+      .route(`${this.path}/:take?/:page?`)
+      .get(this.formController.getMany);
+
     return router;
     
   }

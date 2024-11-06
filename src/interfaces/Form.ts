@@ -5,7 +5,7 @@ import { DeleteResult } from "typeorm";
 
 interface IFormRepository {
   add(form: Form): Promise<Form>;
-  getMany(): Promise<Form[]>;
+  getMany(skip: number, take: number, page: number): Promise<[Form[], Number]>;
   getByCategory(category:string) : Promise<Form[]>  
   getById(id: number): Promise<Form>;
   getCategories() : Promise<string[]>
@@ -17,7 +17,7 @@ interface IFormService {
   formRepository: IFormRepository;
 
   add(form: Form): Promise<Form>;
-  getMany(): Promise<Form[]>;
+  getMany(skip: number, take: number, page: number): Promise<[Form[], Number]>;
   getByCategory(category:string) : Promise<Form[]>  
   getById(id: number): Promise<Form>;
   getCategories() : Promise<string[]>

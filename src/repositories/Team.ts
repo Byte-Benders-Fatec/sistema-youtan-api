@@ -16,10 +16,13 @@ class TeamRepository implements ITeamRepository {
         return team;
     };
     
-    async getMany(): Promise<Team[]> {
-        const teams = await this.teamRepository.find();
-    
-        return teams;
+    async getMany(skip: number, take: number, _page: number): Promise<[Team[], number]> {
+        const [users, total] = await this.teamRepository.findAndCount({
+            skip,
+            take
+        });
+        
+        return [users, total];
     };
 
     async getById(id: number): Promise<Team> {

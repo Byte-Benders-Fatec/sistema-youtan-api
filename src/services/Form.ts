@@ -18,11 +18,12 @@ class FormService implements IFormService{
         return form;
     };
 
-    async getMany(): Promise<Form[]> {
-        const form = await this.formRepository.getMany();
+    async getMany(skip: number=0, take: number=10, page: number=1): Promise<[Form[], Number]> {
+        const [forms, total] = await this.formRepository.getMany(skip, take, page);
 
-        return form;
+        return [forms, total];
     };
+
 
     async getByCategory(category: string): Promise<Form[]> {
         const form = await this.formRepository.getByCategory(category);

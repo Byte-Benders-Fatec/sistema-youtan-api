@@ -23,6 +23,11 @@ class TeamRouter {
       .put(this.teamController.updateById)
       .delete(this.teamController.deleteById)
 
+
+    router
+      .route(`${this.path}/:take?/:page?`)
+      .get(this.teamController.getMany);
+
     return router;
     
   }

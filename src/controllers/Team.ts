@@ -34,12 +34,16 @@ class TeamController implements ITeamController {
         };
     };
 
-    async getMany(_req: Request, res: Response, next: NextFunction): Promise<Response> {
+    async getMany(req: Request, res: Response, next: NextFunction): Promise<Response> {
         try {
-            const teams = await this.teamService.getMany();
+            const take = Number(req.query.take) || 10;
+            const page = Number(req.query.page) || 1;
+            const skip = (page-1) * take;
+
+            const [teams, total] = await this.teamService.getMany(skip, take, page);
             if (teams.length === 0) return res.status(HttpStatus.OK).json({message: "no team was created"});
 
-            return res.status(HttpStatus.OK).json(teams);
+            return res.status(HttpStatus.OK).json({teams, total});
         } catch (error) {
             next(error);
         };
