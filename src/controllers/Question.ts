@@ -44,7 +44,6 @@ class QuestionController implements IQuestionController {
             const [teams, total] = await this.questionService.getMany(skip, take, page);
             if (teams.length === 0) return res.status(HttpStatus.OK).json({message: "no question was created"});
 
-            console.log(teams, total)
             return res.status(HttpStatus.OK).json({teams, total});
         } catch (error) {
             next(error);
@@ -104,8 +103,7 @@ class QuestionController implements IQuestionController {
 
             const [questions, total] = await this.questionService.getByFormId(formId, skip, take, page);
             if (questions.length === 0) return res.status(HttpStatus.OK).json({message: "no question was created"});
-
-            console.log(   questions, total)
+            
             return res.status(HttpStatus.OK).json({questions, total});
         } catch (error) {
             next(error);
