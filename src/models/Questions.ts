@@ -13,11 +13,8 @@ class Question {
     })
     title: string;
 
-    @Column('varchar',{
-        length: 100,
-        nullable: true
-    })
-    alternatives: string;
+    @Column('simple-array', { nullable: true })
+    alternatives: string[];
     
     @Column('varchar',{
         length: 20,
