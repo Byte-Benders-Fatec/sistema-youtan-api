@@ -1,5 +1,6 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm"
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm"
 import User from "./User";
+import Form from "./Form";
 
 @Entity('answers')
 
@@ -7,16 +8,16 @@ class Answers{
     @PrimaryGeneratedColumn('increment')
     id: number
 
-    @Column('varchar',{
-        length:50,
-        nullable : false
-    })
-    user_Answers : string
+    @Column('simple-array', { nullable: true })
+    userAnswers: string[];
 
-    @Column('date',{
-        nullable: false
-    })
-    date : Date
+    @ManyToOne(() => User, (user) => user)
+    @JoinColumn()
+    user: User;
+
+    @ManyToOne(() => Form, (form) => form)
+    @JoinColumn()
+    form: Form;
 
 }
 
