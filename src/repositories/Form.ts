@@ -18,6 +18,9 @@ class formRepository implements IFormRepository {
     
     async getMany(skip: number, take: number, _page: number): Promise<[Form[], number]> {
         const [forms, total] = await this.formRepository.findAndCount({
+            relations: {
+                questions: true,
+            },
             skip,
             take
         });
