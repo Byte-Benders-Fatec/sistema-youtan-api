@@ -1,4 +1,4 @@
-import { Column, Entity, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
+import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import Form from "./Form";
 
 @Entity('questions')
@@ -23,6 +23,7 @@ class Question {
     type: string;
 
     @ManyToOne(() => Form, (form) => form.questions, { onDelete: "CASCADE" })
+    @JoinColumn()
     form: Form;
 }
 

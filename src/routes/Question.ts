@@ -15,23 +15,20 @@ class QuestionRouter {
     router
       .route(`${this.path}`)
       .post(this.questionController.add)
-      .get(this.questionController.getMany);
     
     router
       .route(`${this.path}/types`)
       .get(this.questionController.getTypes);
 
     router
+      .route(`${this.path}/:formId/:take?/:page?`)
+      .get(this.questionController.getByFormId);
+
+    router
       .route(`${this.path}/:id`)
       .get(this.questionController.getById)
       .put(this.questionController.updateById)
       .delete(this.questionController.deleteById)
-    
-      
-    router
-      .route(`${this.path}/:take?/:page?`)
-      .get(this.questionController.getMany);
-    
     
       return router;
     

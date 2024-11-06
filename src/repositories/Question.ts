@@ -44,6 +44,19 @@ class questionRepository implements IQuestionRepository {
         return question;
     };
 
+    async getByFormId(formId: number, skip: number, take: number, _page: number): Promise<[Question[], number]> {
+        const [question, total] = await this.questionRepository.findAndCount({
+            relations: {
+                form: true
+            },
+            where: {form: {id: formId}},
+            skip,
+            take
+        });
+        
+        return [question, total];
+    };
+
     async getByType(type: string): Promise<Question[]> {
         const question = await this.questionRepository.findBy({type});
     

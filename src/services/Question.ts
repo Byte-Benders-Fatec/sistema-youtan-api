@@ -42,6 +42,12 @@ class QuestionService implements IQuestionService{
         return question;
     };
 
+    async getByFormId(formId: number, skip: number=0, take: number=10, page: number=1): Promise<[Question[], Number]> {
+        const [questions, total] = await this.questionRepository.getByFormId(formId, skip, take, page);
+
+        return [questions, total];
+    };
+
     async getTypes(): Promise<string[]> {
         const types = await this.questionRepository.getTypes();
 

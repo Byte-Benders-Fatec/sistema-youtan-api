@@ -13,6 +13,7 @@ class QuestionController implements IQuestionController {
         this.getById = this.getById.bind(this);
         this.getByType = this.getByType.bind(this);
         this.getByTitle = this.getByTitle.bind(this);
+        this.getByFormId = this.getByFormId.bind(this);
         this.getTypes = this.getTypes.bind(this);
         this.updateById = this.updateById.bind(this);
         this.deleteById = this.deleteById.bind(this);
@@ -43,6 +44,7 @@ class QuestionController implements IQuestionController {
             const [teams, total] = await this.questionService.getMany(skip, take, page);
             if (teams.length === 0) return res.status(HttpStatus.OK).json({message: "no question was created"});
 
+            console.log(teams, total)
             return res.status(HttpStatus.OK).json({teams, total});
         } catch (error) {
             next(error);
@@ -91,6 +93,23 @@ class QuestionController implements IQuestionController {
         } catch (error) {
             next(error);
         }
+    };
+
+    async getByFormId(req: Request, res: Response, next: NextFunction): Promise<Response> {
+        try {
+            const formId = parseInt(req.params.formId);
+            const take = Number(req.query.take) || 10;
+            const page = Number(req.query.page) || 1;
+            const skip = (page-1) * take;
+
+            const [questions, total] = await this.questionService.getByFormId(formId, skip, take, page);
+            if (questions.length === 0) return res.status(HttpStatus.OK).json({message: "no question was created"});
+
+            console.log(   questions, total)
+            return res.status(HttpStatus.OK).json({questions, total});
+        } catch (error) {
+            next(error);
+        };
     };
 
     async getTypes(_req: Request, res: Response, next: NextFunction): Promise<Response> {

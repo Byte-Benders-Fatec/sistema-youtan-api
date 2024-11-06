@@ -15,7 +15,6 @@ class FormRouter {
     router
       .route(`${this.path}`)
       .post(this.formController.add)
-      .get(this.formController.getMany);
     
     router
       .route(`${this.path}/categories`)

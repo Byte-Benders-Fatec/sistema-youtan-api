@@ -14,6 +14,7 @@ class Form{
     category: string;
 
     @OneToMany(() => Question, (question) => question.form, { cascade: true })
+    @JoinColumn()
     questions: Question[];
 }
 

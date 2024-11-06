@@ -15,7 +15,6 @@ class TeamRouter {
     router
       .route(`${this.path}`)
       .post(this.teamController.add)
-      .get(this.teamController.getMany);
 
     router
       .route(`${this.path}/:id`)
