@@ -6,10 +6,13 @@ import Form from "./Form";
 
 class Answers{
     @PrimaryGeneratedColumn('increment')
-    id: number
+    id?: number
 
     @Column('simple-array', { nullable: true })
     userAnswers: string[];
+
+    @Column('boolean', {default: false})
+    userHasAnswered?: boolean = false;
 
     @ManyToOne(() => User, (user) => user)
     @JoinColumn()

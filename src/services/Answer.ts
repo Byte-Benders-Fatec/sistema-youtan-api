@@ -33,6 +33,7 @@ class AnswerService implements IAnswerService{
         answer.userAnswers = newAnswerData.userAnswers ? newAnswerData.userAnswers : answer.userAnswers;
         answer.form = newAnswerData.form ? newAnswerData.form : answer.form;
         answer.user = newAnswerData.user ? newAnswerData.user : answer.user;
+        answer.userHasAnswered = newAnswerData.userHasAnswered ? newAnswerData.userHasAnswered : answer.userHasAnswered;
 
         await validationsUtils.validateObject(Answer, answer);
         const updatedAnswer = await this.answerRepository.updateById(answer);

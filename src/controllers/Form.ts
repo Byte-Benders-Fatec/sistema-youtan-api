@@ -1,12 +1,19 @@
 import { NextFunction, Request, Response } from "express";
 import { IFormController, IFormService } from "../interfaces/Form";
 import HttpStatus from 'http-status-codes';
+import { IAnswerService } from "../interfaces/Answer";
+import { IUserService } from "../interfaces/User";
+import { FormRoles } from "../domain/Form";
 
 class FormController implements IFormController {
     formService: IFormService;
+    answerService: IAnswerService;
+    userService: IUserService;
 
-    constructor(formService: IFormService) {
+    constructor(formService: IFormService, answerService: IAnswerService, userService: IUserService) {
         this.formService = formService;
+        this.answerService = answerService;
+        this.userService = userService;
         
         this.add = this.add.bind(this);
         this.getMany = this.getMany.bind(this);
@@ -24,8 +31,15 @@ class FormController implements IFormController {
                 return res.status(HttpStatus.BAD_REQUEST).json({message: "form category missing"});
             };
 
-
             const newForm = await this.formService.add(form);
+            const users = await this.userService.getByRoles(FormRoles[newForm.category]);
+            for (const user of users) {
+                const userAnswer = await this.answerService.add({
+                    "userAnswers": [],
+                    "form": newForm,
+                    "user": user
+                });
+            };
 
             return res.status(HttpStatus.OK).json(newForm);
         } catch (error) {

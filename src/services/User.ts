@@ -45,6 +45,12 @@ class UserService implements IUserService{
         return user;
     };
 
+    async getByRoles(roles: string[]): Promise<User[]> {
+        const users = await this.userRepository.getByRoles(roles);
+
+        return users;
+    };
+
     async getRoles(): Promise<string[]> {
         const roles = await this.userRepository.getRoles();
 

@@ -27,6 +27,10 @@ class UserRouter {
       .delete(this.userController.deleteById)
     
     router
+      .route(`${this.path}/:roles`)
+      .get(this.userController.getByRoles)
+    
+    router
       .route(`${this.path}/:take?/:page?`)
       .get(this.userController.getMany);
 

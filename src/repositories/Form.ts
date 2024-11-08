@@ -1,7 +1,7 @@
 import { IFormRepository } from "../interfaces/Form";
 import { DeleteResult, Repository } from "typeorm";
 import Form from "../models/Form";
-import FormCategories from "../domain/Form";
+import {FormCategories} from "../domain/Form";
 
 class formRepository implements IFormRepository {
     formRepository: Repository<Form>;

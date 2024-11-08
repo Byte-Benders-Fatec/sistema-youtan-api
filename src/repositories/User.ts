@@ -1,7 +1,7 @@
 import roles from "../domain/User";
 import { IUserRepository } from "../interfaces/User";
 import User from "../models/User";
-import { DeleteResult, Repository } from "typeorm";
+import { DeleteResult, In, Repository } from "typeorm";
 
 class UserRepository implements IUserRepository {
     userRepository: Repository<User>;
@@ -55,6 +55,16 @@ class UserRepository implements IUserRepository {
         });
     
         return user;
+    };
+
+    async getByRoles(roles: string[]): Promise<User[]> {
+        const users = await this.userRepository.find({
+            where: {
+                role: In(roles)
+            },
+        });
+    
+        return users;
     };
 
     async getRoles(): Promise<string[]> {
