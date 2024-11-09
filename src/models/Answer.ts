@@ -1,13 +1,11 @@
 import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm"
 import User from "./User";
 import Form from "./Form";
+import Metadata from "./Metadata";
 
 @Entity('answers')
 
-class Answers{
-    @PrimaryGeneratedColumn('increment')
-    id?: number
-
+class Answers extends Metadata{
     @Column('simple-array', { nullable: true })
     userAnswers: string[];
 

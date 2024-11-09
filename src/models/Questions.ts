@@ -1,9 +1,10 @@
 import { Column, Entity, JoinColumn, ManyToOne, PrimaryGeneratedColumn } from "typeorm";
 import Form from "./Form";
+import Metadata from "./Metadata";
 
 @Entity('questions')
 
-class Question {
+class Question extends Metadata {
 	@PrimaryGeneratedColumn('increment')
     id: number;
 

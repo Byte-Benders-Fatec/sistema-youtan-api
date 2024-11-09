@@ -2,12 +2,10 @@ import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateCol
 import { IsEmail, IsIn } from 'class-validator'
 import Team from './Team';
 import UserRoles from "../domain/User";
+import Metadata from './Metadata';
 
 @Entity('users')
-class User {
-    @PrimaryGeneratedColumn('increment')
-    id: number;
-
+class User extends Metadata {
     @Column('varchar', {
         length: 100,
         nullable: false

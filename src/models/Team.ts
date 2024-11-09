@@ -1,7 +1,8 @@
 import { Entity, Column, PrimaryGeneratedColumn} from 'typeorm';
+import Metadata from './Metadata';
 
 @Entity('teams')
-class Team {
+class Team extends Metadata {
     @PrimaryGeneratedColumn('increment')
     id: number;
 
