@@ -1,4 +1,4 @@
-import { DeleteResult } from "typeorm";
+import { DeleteResult, FindOptionsWhere } from "typeorm";
 import { IAnswerRepository, IAnswerService } from "../interfaces/Answer";
 import Answer from "../models/Answer";
 import { validationsUtils } from "../utils/Validation";
@@ -17,8 +17,8 @@ class AnswerService implements IAnswerService{
         return answer;
     };
 
-    async getMany(skip: number=0, take: number=10, page: number=1): Promise<[Answer[], Number]> {
-        const [answers, total] = await this.answerRepository.getMany(skip, take, page);
+    async getMany(where: FindOptionsWhere<Answer>={}, skip: number=0, take: number=10, page: number=1): Promise<[Answer[], Number]> {
+        const [answers, total] = await this.answerRepository.getMany(where, skip, take, page);
 
         return [answers, total];
     };
@@ -27,6 +27,12 @@ class AnswerService implements IAnswerService{
         const answer = await this.answerRepository.getById(id);
 
         return answer;
+    };
+
+    async getByUserId(id: number): Promise<Answer[]> {
+        const answers = await this.answerRepository.getByUserId(id);
+
+        return answers;
     };
 
     async updateById(answer: Answer, newAnswerData: Answer): Promise<Answer> {

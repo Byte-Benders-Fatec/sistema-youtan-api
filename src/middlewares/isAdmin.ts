@@ -10,8 +10,8 @@ const middlewareAdmin = (req: Request, res: Response, next: NextFunction): void 
         };
 
         const token = cookieUtils.getCookie(req, process.env.COOKIE_NAME);
-        const payload = jwt.verify(token, process.env.SECRET_KEY);
-        if(payload["role"] !== "Admin"){
+        const user = jwt.verify(token, process.env.SECRET_KEY);
+        if(user.user["role"] !== "Admin"){
             return res.status(HttpStatus.UNAUTHORIZED).send({ error: "admin access only" }); 
         };
 

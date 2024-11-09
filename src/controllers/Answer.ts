@@ -11,6 +11,7 @@ class AnswerController implements IAnswerController {
         this.add = this.add.bind(this);
         this.getMany = this.getMany.bind(this);
         this.getById = this.getById.bind(this);
+        this.getByUserId = this.getByUserId.bind(this);
         this.updateById = this.updateById.bind(this);
         this.deleteById = this.deleteById.bind(this);
     };
@@ -32,11 +33,13 @@ class AnswerController implements IAnswerController {
 
     async getMany(req: Request, res: Response, next: NextFunction): Promise<Response> {
         try {
+            const user = res.locals.user.user;
             const take = Number(req.query.take) || 10;
             const page = Number(req.query.page) || 1;
             const skip = (page-1) * take;
+            const where = (user.role === "Admin")? {} : {user: {id: user.id}};
 
-            const [answers, total] = await this.answerService.getMany(skip, take, page);
+            const [answers, total] = await this.answerService.getMany(where, skip, take, page);
             if (answers.length === 0) return res.status(HttpStatus.OK).json({message: "no answer was created"});
 
             return res.status(HttpStatus.OK).json({answers, total});
@@ -55,6 +58,21 @@ class AnswerController implements IAnswerController {
             if(!answer) return res.status(HttpStatus.NOT_FOUND).json({message: "answer not found"});
     
             return res.status(HttpStatus.OK).json(answer);
+        } catch (error) {
+            next(error);
+        };
+        
+    };
+
+    async getByUserId(req: Request, res: Response, next: NextFunction): Promise<Response> {
+        try {
+            const id = req.params.id? parseInt(req.params.id) : res.locals.user.id;
+            if(!id) return res.status(HttpStatus.BAD_REQUEST).json({message: "user id missing"});
+    
+            const answers = await this.answerService.getByUserId(id);
+            if(answers.length === 0) return res.status(HttpStatus.OK).json({message: "user dont have forms to answer"});
+    
+            return res.status(HttpStatus.OK).json(answers);
         } catch (error) {
             next(error);
         };

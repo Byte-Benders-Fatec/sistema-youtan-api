@@ -1,15 +1,15 @@
 const FormCategories = [
     "Avaliação de Liderado",
-    "Avaliação de Lider",
+    "Avaliação de Líder",
     "Autoavaliação"
 ];
 
 const FormRoles = {
     "Avaliação de Liderado": [
         "Líder e Liderado",
-        "Liderado"
+        "Líder"
     ],
-    "Avaliação de Lider": [
+    "Avaliação de Líder": [
         "Líder e Liderado",
         "Liderado"
     ],

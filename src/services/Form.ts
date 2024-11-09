@@ -44,6 +44,7 @@ class FormService implements IFormService{
     };
 
     async updateById(form: Form, newFormData: Form): Promise<Form> {
+        form.name = newFormData.name ? newFormData.name : form.name;
         form.category = newFormData.category ? newFormData.category : form.category;
 
         await validationsUtils.validateObject(form, Form);

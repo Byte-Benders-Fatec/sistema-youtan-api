@@ -30,6 +30,7 @@ export default (app: express.Express): express.Express => {
 
     // enable auth middleware for private routes
     app.use(middlewareAuth);
+    app.use(PRIVATE, answerRouter)
 
     // enable auth middleware for admin routes
     app.use(middlewareAdmin);
@@ -38,8 +39,7 @@ export default (app: express.Express): express.Express => {
     app.use(PRIVATE, userRouter);
     app.use(PRIVATE, teamRouter);
     app.use(PRIVATE, formRouter);
-    app.use(PRIVATE, questionRouter);
-    app.use(PRIVATE, answerRouter)
+    app.use(PRIVATE, questionRouter)
     
     // enable error handler middleware for all routes
     app.use(middlewareError);

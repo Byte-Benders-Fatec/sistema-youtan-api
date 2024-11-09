@@ -15,6 +15,10 @@ class AnswerRouter {
     router
       .route(`${this.path}`)
       .post(this.answerController.add)
+    
+    router
+      .route(`${this.path}/forms/:id?`)
+      .get(this.answerController.getByUserId)
 
     router
       .route(`${this.path}/:id`)

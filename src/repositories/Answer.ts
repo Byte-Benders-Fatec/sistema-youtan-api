@@ -1,6 +1,6 @@
 import { IAnswerRepository } from "../interfaces/Answer";
 import Answer from "../models/Answer";
-import { DeleteResult, Repository } from "typeorm";
+import { DeleteResult, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
 
 class AnswerRepository implements IAnswerRepository {
     answerRepository: Repository<Answer>;
@@ -15,10 +15,13 @@ class AnswerRepository implements IAnswerRepository {
         return answer;
     };
     
-    async getMany(skip: number, take: number, _page: number): Promise<[Answer[], number]> {
+    async getMany(where: FindOptionsWhere<Answer>, skip: number, take: number, _page: number): Promise<[Answer[], number]> {
         const [answers, total] = await this.answerRepository.findAndCount({
+            where,
             relations: {
-                form: true,
+                form: {
+                    questions: true,
+                },
                 user: true
             },
             skip,
@@ -30,10 +33,26 @@ class AnswerRepository implements IAnswerRepository {
 
     async getById(id: number): Promise<Answer> {
         const answer = await this.answerRepository.findOneBy({
-            id
+            id,
         });
     
         return answer;
+    };
+
+    async getByUserId(id: number): Promise<Answer[]> {
+        const answers = await this.answerRepository.find({
+            where: {
+                user: {
+                    id
+                }
+            },
+            relations: {
+                form: true,
+                user: true
+            },
+        });
+    
+        return answers;
     };
 
     async updateById(newAnswerData: Answer): Promise<Answer> {
