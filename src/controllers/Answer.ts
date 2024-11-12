@@ -1,17 +1,21 @@
 import { NextFunction, Request, Response } from "express";
 import { IAnswerController, IAnswerService } from "../interfaces/Answer";
 import HttpStatus from 'http-status-codes';
+import { IFormService } from "../interfaces/Form";
 
 class AnswerController implements IAnswerController {
     answerService: IAnswerService;
+    formService: IFormService;
 
-    constructor(answerService: IAnswerService) {
+    constructor(answerService: IAnswerService, formService: IFormService) {
         this.answerService = answerService;
+        this.formService = formService;
 
         this.add = this.add.bind(this);
         this.getMany = this.getMany.bind(this);
         this.getById = this.getById.bind(this);
         this.getByUserId = this.getByUserId.bind(this);
+        this.getFormById = this.getFormById.bind(this);
         this.updateById = this.updateById.bind(this);
         this.deleteById = this.deleteById.bind(this);
     };
@@ -73,6 +77,22 @@ class AnswerController implements IAnswerController {
             if(answers.length === 0) return res.status(HttpStatus.OK).json({message: "user dont have forms to answer"});
     
             return res.status(HttpStatus.OK).json(answers);
+        } catch (error) {
+            next(error);
+        };
+        
+    };
+
+    async getFormById(req: Request, res: Response, next: NextFunction): Promise<Response> {
+        try {
+            const id = parseInt(req.params.id);
+            if(!id) return res.status(HttpStatus.BAD_REQUEST).json({message: "form id missing"});
+    
+            const form = await this.formService.getById(id);
+            console.log(form)
+            if(!form) return res.status(HttpStatus.OK).json({message: "form not found"});
+    
+            return res.status(HttpStatus.OK).json(form);
         } catch (error) {
             next(error);
         };

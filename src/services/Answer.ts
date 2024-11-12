@@ -2,6 +2,7 @@ import { DeleteResult, FindOptionsWhere } from "typeorm";
 import { IAnswerRepository, IAnswerService } from "../interfaces/Answer";
 import Answer from "../models/Answer";
 import { validationsUtils } from "../utils/Validation";
+import Form from "../models/Form";
 
 class AnswerService implements IAnswerService{
     answerRepository: IAnswerRepository

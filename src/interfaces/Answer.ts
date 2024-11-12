@@ -31,6 +31,7 @@ interface IAnswerController {
   getMany(req: Request, res: Response, next: NextFunction): Promise<void | Response>;
   getById(req: Request, res: Response, next: NextFunction): Promise<void | Response>;
   getByUserId(req: Request, res: Response, next: NextFunction): Promise<void | Response>;
+  getFormById(req: Request, res: Response, next: NextFunction): Promise<void | Response>;
   updateById(req: Request, res: Response, next: NextFunction): Promise<void | Response>;
   deleteById(req: Request, res: Response, next: NextFunction): Promise<void | Response>;
 };

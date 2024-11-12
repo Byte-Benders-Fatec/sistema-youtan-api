@@ -1,6 +1,6 @@
 import { IAnswerRepository } from "../interfaces/Answer";
 import Answer from "../models/Answer";
-import { DeleteResult, FindOneOptions, FindOptionsWhere, Repository } from "typeorm";
+import { DeleteResult, FindOptionsWhere, Repository } from "typeorm";
 
 class AnswerRepository implements IAnswerRepository {
     answerRepository: Repository<Answer>;
