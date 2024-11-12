@@ -89,7 +89,6 @@ class AnswerController implements IAnswerController {
             if(!id) return res.status(HttpStatus.BAD_REQUEST).json({message: "form id missing"});
     
             const form = await this.formService.getById(id);
-            console.log(form)
             if(!form) return res.status(HttpStatus.OK).json({message: "form not found"});
     
             return res.status(HttpStatus.OK).json(form);
