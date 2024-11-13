@@ -12,11 +12,8 @@ class UserService implements IUserService{
     };
 
     async add(user: User): Promise<User> {
-        user.password = passwordUtils.generatePass();
         await validationsUtils.validateObject(User, user);
         user = await this.userRepository.add(user);
-
-        // emailUtils.sendEmail(user.email, user.password);
 
         return user;
     };

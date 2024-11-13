@@ -12,6 +12,12 @@ class Question extends Metadata {
         length: 100,
         nullable: false
     })
+    category: string;
+
+    @Column('varchar',{
+        length: 100,
+        nullable: false
+    })
     title: string;
 
     @Column('simple-array', { nullable: true })

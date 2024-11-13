@@ -22,7 +22,7 @@ class UserController implements IUserController {
     async add(req: Request, res: Response, next: NextFunction): Promise<Response> {
         try {
             const user = req.body;
-            if(!user.name || !user.email || !user.role || !user.team) {
+            if(!user.name || !user.email || !user.password || !user.role || !user.team) {
                 return res.status(HttpStatus.BAD_REQUEST).json({message: "user body missing"});
             };
 
