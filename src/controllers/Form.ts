@@ -1,18 +1,15 @@
 import { NextFunction, Request, Response } from "express";
 import { IFormController, IFormService } from "../interfaces/Form";
 import HttpStatus from 'http-status-codes';
-import { IAnswerService } from "../interfaces/Answer";
 import { IUserService } from "../interfaces/User";
 import { FormRoles } from "../domain/Form";
 
 class FormController implements IFormController {
     formService: IFormService;
-    answerService: IAnswerService;
     userService: IUserService;
 
-    constructor(formService: IFormService, answerService: IAnswerService, userService: IUserService) {
+    constructor(formService: IFormService, userService: IUserService) {
         this.formService = formService;
-        this.answerService = answerService;
         this.userService = userService;
         
         this.add = this.add.bind(this);
@@ -27,19 +24,18 @@ class FormController implements IFormController {
     async add(req: Request, res: Response, next: NextFunction): Promise<Response> {
         try {
             const form = req.body;
-            if(!form.category) {
+            if(!form.name || !form.category || !form.team) {
                 return res.status(HttpStatus.BAD_REQUEST).json({message: "form category missing"});
             };
 
             const newForm = await this.formService.add(form);
-            const users = await this.userService.getByRoles(FormRoles[newForm.category]);
-            for (const user of users) {
-                const userAnswer = await this.answerService.add({
-                    "userAnswers": [],
-                    "form": newForm,
-                    "user": user
-                });
-            };
+
+            const evaluatorRole = FormRoles[newForm.category].Evaluator;
+            const evaluatedRole = FormRoles[newForm.category].EvaluatedUser;
+            
+            const evaluators = await this.userService.getByRoles(evaluatorRole, newForm.team);
+            const evaluatedUsers = (evaluatedRole)? await this.userService.getByRoles(evaluatedRole, newForm.team): evaluatedRole;
+            this.formService.addAnswersForEvaluators(evaluators, evaluatedUsers, newForm);
 
             return res.status(HttpStatus.OK).json(newForm);
         } catch (error) {

@@ -2,21 +2,53 @@ import { DeleteResult } from "typeorm";
 import { IFormRepository, IFormService } from "../interfaces/Form";
 import { validationsUtils } from "../utils/Validation";
 import Form from "../models/Form";
+import User from "../models/User";
+import { IAnswerService } from "../interfaces/Answer";
 
 class FormService implements IFormService{
     formRepository: IFormRepository
+    answerService: IAnswerService
 
-    constructor(formRepository: IFormRepository) {
+    constructor(formRepository: IFormRepository, answerService: IAnswerService) {
         this.formRepository = formRepository;
+        this.answerService = answerService;
     };
 
     async add(form: Form): Promise<Form> {
         await validationsUtils.validateObject(form, Form);
         form = await this.formRepository.add(form);
 
-
         return form;
     };
+
+    async addAnswersForEvaluators(evaluators: User[], evaluatedUsers: User[] | null = null, newForm: Form) {
+        const usersToEvaluate = evaluatedUsers ?? [null];
+    
+        await Promise.all(
+            evaluators.flatMap(evaluator => 
+                usersToEvaluate.map(user => {
+                    if(user){
+                        if (user.id !== evaluator.id) {
+                            this.answerService.add({
+                                userAnswers: "",
+                                form: newForm,
+                                user: evaluator,
+                                userToEvaluate: user
+                            })
+                        }
+                    } else {
+                        this.answerService.add({
+                            userAnswers: "",
+                            form: newForm,
+                            user: evaluator,
+                            userToEvaluate: null
+                        })
+                    }
+                })   
+            )
+        );
+    };
+    
 
     async getMany(skip: number=0, take: number=10, page: number=1): Promise<[Form[], Number]> {
         const [forms, total] = await this.formRepository.getMany(skip, take, page);

@@ -3,6 +3,7 @@ import { IAnswerRepository, IAnswerService } from "../interfaces/Answer";
 import Answer from "../models/Answer";
 import { validationsUtils } from "../utils/Validation";
 import Form from "../models/Form";
+import User from "../models/User";
 
 class AnswerService implements IAnswerService{
     answerRepository: IAnswerRepository
@@ -34,6 +35,11 @@ class AnswerService implements IAnswerService{
         const answers = await this.answerRepository.getByUserId(id);
 
         return answers;
+    };
+
+    async getByTeamId(id: number, skip: number=0, take: number=10, page: number=1, user: User): Promise<[Answer[], Number]> {
+        const [answers, total] = await this.answerRepository.getByTeamId(id, skip, take, page, user);
+        return [answers, total];
     };
 
     async updateById(answer: Answer, newAnswerData: Answer): Promise<Answer> {

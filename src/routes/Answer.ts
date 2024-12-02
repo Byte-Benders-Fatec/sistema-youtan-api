@@ -20,10 +20,13 @@ class AnswerRouter {
       .route(`${this.path}/formToAnswer/:id`)
       .get(this.answerController.getFormById)
 
-    
     router
       .route(`${this.path}/forms/:id?`)
       .get(this.answerController.getByUserId)
+    
+    router
+      .route(`${this.path}/myTeam/:take?/:page?`)
+      .get(this.answerController.getByTeamId);
       
     router
       .route(`${this.path}/:id`)
@@ -32,7 +35,7 @@ class AnswerRouter {
       .delete(this.answerController.deleteById)
     
     router
-      .route(`${this.path}/:take?/:page?`)
+      .route(`${this.path}/:take?/:page?/:inicio?/:final?`)
       .get(this.answerController.getMany);
 
     return router;

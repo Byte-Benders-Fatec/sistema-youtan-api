@@ -6,8 +6,8 @@ import Metadata from "./Metadata";
 @Entity('answers')
 
 class Answers extends Metadata{
-    @Column('simple-array', { nullable: true })
-    userAnswers: string[];
+    @Column('varchar', { nullable: true })
+    userAnswers: string;
 
     @Column('boolean', {default: false})
     userHasAnswered?: boolean = false;
@@ -15,6 +15,10 @@ class Answers extends Metadata{
     @ManyToOne(() => User, (user) => user)
     @JoinColumn()
     user: User;
+
+    @ManyToOne(() => User, (user) => user, {nullable: true})
+    @JoinColumn()
+    userToEvaluate: User;
 
     @ManyToOne(() => Form, (form) => form)
     @JoinColumn()

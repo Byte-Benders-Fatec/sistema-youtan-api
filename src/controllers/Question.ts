@@ -15,6 +15,7 @@ class QuestionController implements IQuestionController {
         this.getByTitle = this.getByTitle.bind(this);
         this.getByFormId = this.getByFormId.bind(this);
         this.getTypes = this.getTypes.bind(this);
+        this.getCategories = this.getCategories.bind(this);
         this.updateById = this.updateById.bind(this);
         this.deleteById = this.deleteById.bind(this);
     };
@@ -116,6 +117,18 @@ class QuestionController implements IQuestionController {
             if(!types) return res.status(HttpStatus.NOT_FOUND).json({message: "types not found"});
     
             return res.status(HttpStatus.OK).json(types);
+        } catch (error) {
+            next(error);
+        };
+        
+    };
+
+    async getCategories(_req: Request, res: Response, next: NextFunction): Promise<Response> {
+        try {
+            const categories = await this.questionService.getCategories();
+            if(!categories) return res.status(HttpStatus.NOT_FOUND).json({message: "categories not found"});
+    
+            return res.status(HttpStatus.OK).json(categories);
         } catch (error) {
             next(error);
         };

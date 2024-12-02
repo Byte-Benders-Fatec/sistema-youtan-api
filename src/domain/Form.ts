@@ -1,23 +1,32 @@
 const FormCategories = [
     "Avaliação de Liderado",
-    "Avaliação de Líder",
+    "Avaliação de Liderança",
     "Autoavaliação"
 ];
 
 const FormRoles = {
-    "Avaliação de Liderado": [
-        "Líder e Liderado",
-        "Líder"
-    ],
-    "Avaliação de Líder": [
-        "Líder e Liderado",
-        "Liderado"
-    ],
-    "Autoavaliação": [
-        "Líder",
-        "Líder e Liderado",
-        "Liderado"
-    ]
+    "Avaliação de Liderado": {
+        "Evaluator": [
+            "Líder e Liderado",
+            "Líder"
+        ],
+        "EvaluatedUser": ["Liderado", "Líder e Liderado"]
+    },
+    "Avaliação de Liderança": {
+        "Evaluator": [
+            "Líder e Liderado",
+            "Liderado"
+        ],
+        "EvaluatedUser": ["Líder", "Líder e Liderado"]
+    },
+    "Autoavaliação": {
+        "Evaluator": [
+            "Líder",
+            "Líder e Liderado",
+            "Liderado"
+        ],
+        "EvaluatedUser": null
+    }
 };
 
 export {FormCategories, FormRoles};

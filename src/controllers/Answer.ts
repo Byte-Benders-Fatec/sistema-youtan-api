@@ -2,6 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import { IAnswerController, IAnswerService } from "../interfaces/Answer";
 import HttpStatus from 'http-status-codes';
 import { IFormService } from "../interfaces/Form";
+import { Between } from "typeorm";
 
 class AnswerController implements IAnswerController {
     answerService: IAnswerService;
@@ -16,6 +17,7 @@ class AnswerController implements IAnswerController {
         this.getById = this.getById.bind(this);
         this.getByUserId = this.getByUserId.bind(this);
         this.getFormById = this.getFormById.bind(this);
+        this.getByTeamId = this.getByTeamId.bind(this);
         this.updateById = this.updateById.bind(this);
         this.deleteById = this.deleteById.bind(this);
     };
@@ -40,8 +42,12 @@ class AnswerController implements IAnswerController {
             const user = res.locals.user.user;
             const take = Number(req.query.take) || 10;
             const page = Number(req.query.page) || 1;
+            const from = req.query.from? new Date(`${req.query.from.toString()} 00:00:00`) : new Date("1999-01-01 00:00:00");
+            const to = req.query.to? new Date(`${req.query.to.toString()} 23:59:59`) : new Date("2100-01-01 23:59:59");
+
             const skip = (page-1) * take;
-            const where = (user.role === "Admin")? {} : {user: {id: user.id}};
+
+            const where = (user.role === "Admin")? {updatedAt: Between(from, to)} : {updatedAt: Between(from, to), user: {id: user.id}};
 
             const [answers, total] = await this.answerService.getMany(where, skip, take, page);
             if (answers.length === 0) return res.status(HttpStatus.OK).json({message: "no answer was created"});
@@ -92,6 +98,26 @@ class AnswerController implements IAnswerController {
             if(!form) return res.status(HttpStatus.OK).json({message: "form not found"});
     
             return res.status(HttpStatus.OK).json(form);
+        } catch (error) {
+            next(error);
+        };
+        
+    };
+
+    async getByTeamId(req: Request, res: Response, next: NextFunction): Promise<Response> {
+        try {
+            const user = res.locals.user.user;
+            const id = user.team.id;
+            const take = Number(req.query.take) || 10;
+            const page = Number(req.query.page) || 1;
+            const skip = (page-1) * take;
+
+            if(!id) return res.status(HttpStatus.BAD_REQUEST).json({message: "team id missing"});
+    
+            const [answers, total] = await this.answerService.getByTeamId(id, skip, take, page, user);
+            if(!answers) return res.status(HttpStatus.OK).json({message: "answers not found"});
+    
+            return res.status(HttpStatus.OK).json({answers, total});
         } catch (error) {
             next(error);
         };

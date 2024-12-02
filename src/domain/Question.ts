@@ -4,4 +4,11 @@ const QuestionTypes = [
     "Múltipla Escolha"
 ];
 
-export default QuestionTypes;
+const QuestionCategories = [
+    "Hard Skill",
+    "Soft Skill",
+    "Expectativas",
+    "Satisfação",
+];
+
+export {QuestionTypes, QuestionCategories};

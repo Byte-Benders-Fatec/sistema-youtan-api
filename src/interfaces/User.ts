@@ -3,6 +3,7 @@ import User from "../models/User";
 import { NextFunction, Request, Response } from "express";
 import IRouter from "./Router";
 import { DeleteResult } from "typeorm";
+import Team from "../models/Team";
 
 interface IUserRepository {
   add(user: User): Promise<User>;
@@ -10,7 +11,8 @@ interface IUserRepository {
   getByEmail(email: string): Promise<User>;
   getByLogin(login: User): Promise<User>;
   getById(id: number): Promise<User>;
-  getByRoles(roles: string[]): Promise<User[]>;
+  getByRoles(roles: string[], team: Team): Promise<User[]>;
+  getByTeam(teamId: number): Promise<User[]>;
   getRoles(): Promise<string[]>;
   updateById(newUserData: User): Promise<User>;
   deleteById(id: number): Promise<DeleteResult>;
@@ -24,7 +26,8 @@ interface IUserService {
   getByEmail(email: string): Promise<User>;
   getByLogin(login: User): Promise<User>;
   getById(id: number): Promise<User>;
-  getByRoles(roles: string[]): Promise<User[]>;
+  getByRoles(roles: string[], team: Team): Promise<User[]>;
+  getByTeam(teamId: number): Promise<User[]>;
   getRoles(): Promise<string[]>;
   updateById(user: User, newUserData: User): Promise<User>;
   deleteById(id: number): Promise<DeleteResult>;

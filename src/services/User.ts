@@ -1,8 +1,8 @@
 import { DeleteResult } from "typeorm";
 import { IUserRepository, IUserService } from "../interfaces/User";
 import User from "../models/User";
-import { passwordUtils } from "../utils/Password";
 import { validationsUtils } from "../utils/Validation";
+import Team from "../models/Team";
 
 class UserService implements IUserService{
     userRepository: IUserRepository
@@ -42,8 +42,14 @@ class UserService implements IUserService{
         return user;
     };
 
-    async getByRoles(roles: string[]): Promise<User[]> {
-        const users = await this.userRepository.getByRoles(roles);
+    async getByRoles(roles: string[], team: Team): Promise<User[]> {
+        const users = await this.userRepository.getByRoles(roles, team);
+
+        return users;
+    };
+
+    async getByTeam(teamId: number): Promise<User[]> {
+        const users = await this.userRepository.getByTeam(teamId);
 
         return users;
     };

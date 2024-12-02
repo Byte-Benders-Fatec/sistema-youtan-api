@@ -11,6 +11,7 @@ interface IQuestionRepository {
   getById(id: number): Promise<Question>;
   getByFormId(formId: number, skip: number, take: number, page: number): Promise<[Question[], Number]>;
   getTypes() : Promise<string[]>
+  getCategories() : Promise<string[]>
   updateById(newQuestionData: Question): Promise<Question>;
   deleteById(id: number): Promise<DeleteResult>;
 };
@@ -25,6 +26,7 @@ interface IQuestionService {
   getByType(type:string): Promise<Question[]>
   getByFormId(formId: number, skip: number, take: number, page: number): Promise<[Question[], Number]>
   getTypes() : Promise<string[]>
+  getCategories() : Promise<string[]>
   updateById(question: Question, newQuestionData: Question): Promise<Question>;
   deleteById(id: number): Promise<DeleteResult>;
 };
@@ -39,6 +41,7 @@ interface IQuestionController {
   getById(req: Request, res: Response, next: NextFunction): Promise<void | Response>;
   getByFormId(req: Request, res: Response, next: NextFunction): Promise<void | Response>;
   getTypes(req: Request, res: Response, next: NextFunction): Promise<void | Response>; 
+  getCategories(req: Request, res: Response, next: NextFunction): Promise<void | Response>; 
   updateById(req: Request, res: Response, next: NextFunction): Promise<void | Response>;
   deleteById(req: Request, res: Response, next: NextFunction): Promise<void | Response>;
 };

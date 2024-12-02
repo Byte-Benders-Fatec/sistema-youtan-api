@@ -18,8 +18,8 @@ const answerRepository = new AnswerRepository(ormconfig.getRepository(Answers));
 const answerService = new AnswerService(answerRepository);
 
 const formRepository = new FormRepository(ormconfig.getRepository(Form));
-const formService = new FormService(formRepository);
-const formController = new FormController(formService, answerService, userService);
+const formService = new FormService(formRepository, answerService);
+const formController = new FormController(formService, userService);
 const formRouter = new FormRouter(formController);
 
 export default formRouter.getRouter();

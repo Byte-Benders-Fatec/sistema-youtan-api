@@ -2,6 +2,7 @@ import Form from "../models/Form";
 import { NextFunction, Request, Response } from "express";
 import IRouter from "./Router";
 import { DeleteResult } from "typeorm";
+import User from "../models/User";
 
 interface IFormRepository {
   add(form: Form): Promise<Form>;
@@ -17,6 +18,7 @@ interface IFormService {
   formRepository: IFormRepository;
 
   add(form: Form): Promise<Form>;
+  addAnswersForEvaluators(evaluators: User[], evaluatedUsers: User[], newForm: Form): void;
   getMany(skip: number, take: number, page: number): Promise<[Form[], Number]>;
   getByCategory(category:string) : Promise<Form[]>  
   getById(id: number): Promise<Form>;

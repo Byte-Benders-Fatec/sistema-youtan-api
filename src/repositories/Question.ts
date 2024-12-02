@@ -1,7 +1,7 @@
 import { IQuestionRepository } from "../interfaces/Question";
 import { DeleteResult, Repository } from "typeorm";
 import Question from "../models/Questions";
-import QuestionTypes from "../domain/Question";
+import {QuestionTypes, QuestionCategories} from "../domain/Question";
 
 class questionRepository implements IQuestionRepository {
     questionRepository: Repository<Question>;
@@ -65,6 +65,10 @@ class questionRepository implements IQuestionRepository {
 
     async getTypes(): Promise<string[]> {
         return QuestionTypes;
+    };
+
+    async getCategories(): Promise<string[]> {
+        return QuestionCategories;
     };
 
 

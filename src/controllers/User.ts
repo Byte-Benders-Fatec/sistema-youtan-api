@@ -92,7 +92,7 @@ class UserController implements IUserController {
             const roles = [req.params.role];
             if(!roles) return res.status(HttpStatus.BAD_REQUEST).json({message: "user role missing"});
     
-            const users = await this.userService.getByRoles(roles);
+            const users = []; //await this.userService.getByRoles(roles, {});
             if(!users) return res.status(HttpStatus.NOT_FOUND).json({message: `${roles.join(", ")} has not users`});
     
             return res.status(HttpStatus.OK).json(users);

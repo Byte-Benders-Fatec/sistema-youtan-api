@@ -19,6 +19,10 @@ class QuestionRouter {
     router
       .route(`${this.path}/types`)
       .get(this.questionController.getTypes);
+    
+    router
+      .route(`${this.path}/categories`)
+      .get(this.questionController.getCategories);
 
     router
       .route(`${this.path}/:formId/:take?/:page?`)

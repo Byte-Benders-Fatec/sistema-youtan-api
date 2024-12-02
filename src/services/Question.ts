@@ -54,6 +54,12 @@ class QuestionService implements IQuestionService{
         return types;
     };
 
+    async getCategories(): Promise<string[]> {
+        const categories = await this.questionRepository.getCategories();
+
+        return categories;
+    };
+
     async updateById(question: Question, newQuestionData: Question): Promise<Question> {
         question.title = newQuestionData.title ? newQuestionData.title : question.title;
         question.category = newQuestionData.category ? newQuestionData.category : question.category;
