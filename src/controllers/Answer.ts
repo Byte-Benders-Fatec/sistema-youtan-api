@@ -25,7 +25,7 @@ class AnswerController implements IAnswerController {
     async add(req: Request, res: Response, next: NextFunction): Promise<Response> {
         try {
             const answer = req.body;
-            if(!answer.userAnswers || !answer.user || !answer.form) {
+            if(!answer.user || !answer.form) {
                 return res.status(HttpStatus.BAD_REQUEST).json({message: "answer body missing"});
             };
 
